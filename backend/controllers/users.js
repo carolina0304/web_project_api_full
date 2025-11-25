@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 
 module.exports.getUsers = (req, res) => {
@@ -30,7 +31,7 @@ module.exports.getUserbyID = (req, res) => {
     });
 };
 
-module.exports.createUser = (req, res) => {
+/*module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => res.status(201).send({ data: user }))
@@ -41,7 +42,7 @@ module.exports.createUser = (req, res) => {
         res.status(500).send({ message: "Error interno del servidor" });
       }
     });
-};
+};*/
 
 module.exports.UpdateId = (req, res) => {
   User.findByIdAndUpdate(
@@ -61,4 +62,38 @@ module.exports.UpdateAvatar = (req, res) => {
   )
     .then((user) => res.send({ data: user }))
     .catch((err) => res.status(500).send({ message: "Error" }));
+};
+
+module.exports.createUser = (req, res) => {
+  // Sacamos los datos que nos envía el usuario
+  const { email, password, name, about, avatar } = req.body;
+
+  // Hasheamos (encriptamos) la contraseña para que sea segura
+  bcrypt
+    .hash(password, 10)
+    .then((hash) => {
+      // Creamos el usuario con la contraseña encriptada
+      return User.create({
+        email,
+        password: hash, // guardamos la contraseña encriptada
+        name,
+        about,
+        avatar,
+      });
+    })
+    .then((user) => {
+      // Enviamos la respuesta SIN la contraseña
+      res.status(201).send({
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+      });
+    })
+    .catch((err) => {
+      res
+        .status(400)
+        .send({ message: "Error al crear usuario", error: err.message });
+    });
 };

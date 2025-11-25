@@ -7,6 +7,8 @@ app.use(express.json());
 
 const mongo_url = "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
 
+const { createUser } = require("./controllers/users");
+
 app.use((req, res, next) => {
   req.user = {
     _id: "68e9085c26a52d0d03a22618", // pega el _id del usuario de prueba que creamos en el paso anterior
@@ -35,3 +37,18 @@ const PORT = 3000; //Define en que puerto.
 app.use((req, res) => {
   res.status(404).json({ message: "Recurso solicitado no encontrado" });
 }); //Manejo de rutas no encontradas.
+
+/*const { celebrate, Joi } = require("celebrate");
+router.post(
+  "/signup",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().required().min(4).max(8),
+      name: Joi.string().min(2).max(30),
+      about: Joi.string().min(2).max(30),
+      avatar: Joi.string().custom(validateURL),
+    }),
+  }),
+  createUser
+);*/

@@ -5,19 +5,23 @@ const mongoose = require("mongoose"); //importa Mongoose.
 const userSchema = new mongoose.Schema({
   name: {
     type: String, // este campo se llamara name y guardara el nombre del usuario.
-    required: true, // este campo es obligatorio
+    required: false,
     minlength: 2, // especifica la longitud mínima/máxima de los campos
     maxlength: 30,
+    default: "Jacques Cousteau",
   },
   about: {
     type: String,
-    required: true,
+    required: false,
     minlength: 2,
     maxlength: 30,
+    default: "Explorador",
   },
   avatar: {
     type: String,
-    required: true,
+    required: false,
+    default:
+      "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png", // ✅ Valor por defecto
     validator: {
       //validador para comprobar que la URL es correcta.
       validator(v) {
@@ -44,6 +48,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 4,
     maxlength: 8,
+    select: false, // Esta línea evita que el password se devuelva por defecto
   },
 });
 

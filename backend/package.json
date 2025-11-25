@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/carolina0304/web_project_around_express#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "celebrate": "^15.0.3",
     "express": "^5.1.0",
     "expresss": "^0.0.0",
     "mongoose": "^8.19.1"
