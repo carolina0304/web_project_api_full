@@ -1,5 +1,5 @@
 const express = require("express");
-
+const auth = require("./middlewares/auth");
 const mongoose = require("mongoose"); //importa Mongoose.
 
 const app = express(); //crea tu aplicacion.
@@ -7,8 +7,15 @@ app.use(express.json());
 
 const mongo_url = "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
 
-const { createUser } = require("./controllers/users");
+const { createUser, login } = require("./controllers/users");
 
+//Rutas piblicas (sin autenticacion)
+app.post("/signin", login);
+app.post("/signup", createUser);
+
+app.use(auth); // A partir de aquí, todas las rutas necesitan autenticación
+
+// MIDDLEWARE DE USUARIO TEMPORAL (solo para rutas protegidas)
 app.use((req, res, next) => {
   req.user = {
     _id: "68e9085c26a52d0d03a22618", // pega el _id del usuario de prueba que creamos en el paso anterior
@@ -17,12 +24,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// RUTAS PROTEGIDAS
+const cardsRouter = require("./routes/cards.js");
+app.use("/cards", cardsRouter);
+
 //RUTAS
-const usersRouter = require("./routes/users.js");
+/*const usersRouter = require("./routes/users.js");
 app.use("/users", usersRouter);
 
 const cardsRouter = require("./routes/cards.js");
-app.use("/cards", cardsRouter);
+app.use("/cards", cardsRouter);*/
 
 const PORT = 3000; //Define en que puerto.
 
