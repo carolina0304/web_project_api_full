@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 
@@ -95,5 +96,34 @@ module.exports.createUser = (req, res) => {
       res
         .status(400)
         .send({ message: "Error al crear usuario", error: err.message });
+    });
+};
+
+module.exports.login = (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return Promise.reject(new Error("Incorrect password or email"));
+      }
+      return bcrypt.compare(password, user.password);
+    })
+    .then((matched) => {
+      if (!matched) {
+        // los hashes no coinciden, se rechaza el promise
+        return Promise.reject(new Error("Incorrect password or email"));
+      }
+      // autenticación exitosa
+      const token = jwt.sign(
+        { _id: user._id }, // payload con solo el _id
+        "tu-clave-secreta", // clave secreta
+        { expiresIn: "7d" } // expira en 7 días (una semana)
+      );
+
+      res.send({ token }); // envía el token al cliente
+    })
+    .catch((err) => {
+      res.status(401).send({ message: err.message });
     });
 };
