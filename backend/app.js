@@ -15,25 +15,16 @@ app.post("/signup", createUser);
 
 app.use(auth); // A partir de aquí, todas las rutas necesitan autenticación
 
-// MIDDLEWARE DE USUARIO TEMPORAL (solo para rutas protegidas)
-app.use((req, res, next) => {
-  req.user = {
-    _id: "68e9085c26a52d0d03a22618", // pega el _id del usuario de prueba que creamos en el paso anterior
-  };
-
-  next();
-});
-
-// RUTAS PROTEGIDAS
-const cardsRouter = require("./routes/cards.js");
-app.use("/cards", cardsRouter);
-
-//RUTAS
-/*const usersRouter = require("./routes/users.js");
+//RUTAS PROTEGIDAS
+const usersRouter = require("./routes/users.js");
 app.use("/users", usersRouter);
 
 const cardsRouter = require("./routes/cards.js");
-app.use("/cards", cardsRouter);*/
+app.use("/cards", cardsRouter);
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Recurso solicitado no encontrado" });
+}); //Manejo de rutas no encontradas.
 
 const PORT = 3000; //Define en que puerto.
 
@@ -45,9 +36,27 @@ const PORT = 3000; //Define en que puerto.
   }); //Levanta el servidor y escucha en el puerto definido.
 })(); //Funcion autoejecutable para manejar asincronía.
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Recurso solicitado no encontrado" });
-}); //Manejo de rutas no encontradas.
+// MIDDLEWARE DE USUARIO TEMPORAL (solo para rutas protegidas)
+/*app.use((req, res, next) => {
+  req.user = {
+    _id: "68e9085c26a52d0d03a22618", // pega el _id del usuario de prueba que creamos en el paso anterior
+  };
+
+  next();
+});*/
+
+//RUTAS
+
+/*const cardsRouter = require("./routes/cards.js");
+app.use("/cards", cardsRouter);*/
+
+(async () => {
+  await mongoose.connect(mongo_url); //conecta a la base de datos MongoDB llamada "aroundb".
+  console.log("Conectado a la base de datos MongoDB");
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  }); //Levanta el servidor y escucha en el puerto definido.
+})(); //Funcion autoejecutable para manejar asincronía.
 
 /*const { celebrate, Joi } = require("celebrate");
 router.post(

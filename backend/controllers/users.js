@@ -101,12 +101,13 @@ module.exports.createUser = (req, res) => {
 
 module.exports.login = (req, res) => {
   const { email, password } = req.body;
-
+  let user;
   User.findOne({ email })
-    .then((user) => {
-      if (!user) {
+    .then((foundUser) => {
+      if (!foundUser) {
         return Promise.reject(new Error("Incorrect password or email"));
       }
+      user = foundUser;
       return bcrypt.compare(password, user.password);
     })
     .then((matched) => {
