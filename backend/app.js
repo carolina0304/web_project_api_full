@@ -7,6 +7,53 @@ app.use(express.json());
 
 const mongo_url = "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
 
+/*import React, { useState, useEffect } from "react";
+
+function App() {
+  // Estado para el token
+  const [token, setToken] = useState("");
+
+  // Estado para saber si el usuario está logueado
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Estado para los datos del usuario
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    // Verificar si hay un token guardado en localStorage
+    const savedToken = localStorage.getItem("token");
+
+    if (savedToken) {
+      setToken(savedToken);
+      // Aquí verificarías si el token es válido
+      // Por ahora, asumimos que sí
+      setIsLoggedIn(true);
+    }
+  }, []); // Array vacío = se ejecuta solo al montar
+
+  // Función para manejar el login exitoso
+  const handleLogin = (token, userData) => {
+    // Guardar el token en localStorage
+    localStorage.setItem("token", token);
+
+    // Actualizar los estados
+    setToken(token);
+    setCurrentUser(userData);
+    setIsLoggedIn(true);
+  };
+
+  // Función para manejar el logout
+  const handleLogout = () => {
+    // Eliminar el token de localStorage
+    localStorage.removeItem("token");
+
+    // Limpiar los estados
+    setToken("");
+    setCurrentUser({});
+    setIsLoggedIn(false);
+  };
+}*/
+
 const { createUser, login } = require("./controllers/users");
 
 //Rutas piblicas (sin autenticacion)
