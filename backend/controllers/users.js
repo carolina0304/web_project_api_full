@@ -65,23 +65,57 @@ module.exports.infoUser = (req, res) => {
 };*/
 
 module.exports.UpdateId = (req, res) => {
-  User.findByIdAndUpdate(
-    req.user._id, //primer parametro:ID del usuario
-    { name: req.body.name, about: req.body.about }, // segundo parámetro: campos a actualizar
-    { new: true, runValidators: true } // tercer parámetro: opciones
-  )
-    .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: "Error" }));
+  User.findById(req.user._id) // 🔍 Primero busca el usuario
+    .orFail() // ⚠️ Convierte null en error
+    .then((user) => {
+      // 🎯 Aquí ya sabemos que el usuario existe
+      // Ahora actualizamos
+      return User.findByIdAndUpdate(
+        req.user._id,
+        { name: req.body.name, about: req.body.about },
+        { new: true, runValidators: true }
+      );
+    })
+    .then((updatedUser) => {
+      res.send({ data: updatedUser });
+    })
+    .catch((err) => {
+      // 🚨 Manejo de errores específicos
+      if (err.name === "DocumentNotFoundError") {
+        res.status(404).send({ message: "Usuario no encontrado" });
+      } else if (err.name === "ValidationError") {
+        res.status(400).send({ message: "Datos inválidos" });
+      } else {
+        res.status(500).send({ message: "Error interno del servidor" });
+      }
+    });
 };
 
 module.exports.UpdateAvatar = (req, res) => {
-  User.findByIdAndUpdate(
-    req.user._id, // primer parámetro: ID del usuario
-    { avatar: req.body.avatar }, // segundo parámetro: campo avatar a actualizar
-    { new: true, runValidators: true } // tercer parámetro: opciones
-  )
-    .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: "Error" }));
+  User.findById(req.user._id) // 🔍 Primero busca el usuario
+    .orFail() // ⚠️ Convierte null en error
+    .then((user) => {
+      // 🎯 Aquí ya sabemos que el usuario existe
+      // Ahora actualizamos
+      return User.findByIdAndUpdate(
+        req.user._id,
+        { avatar: req.body.avatar }, // segundo parámetro: campo avatar a actualizar
+        { new: true, runValidators: true } // tercer parámetro: opciones
+      );
+    })
+    .then((UpdateUser) => {
+      res.send({ data: UpdateUser });
+    })
+    .catch((err) => {
+      // 🚨 Manejo de errores específicos
+      if (err.name === "DocumentNotFoundError") {
+        res.status(404).send({ message: "Usuario no encontrado" });
+      } else if (err.name === "ValidationError") {
+        res.status(400).send({ message: "Datos inválidos" });
+      } else {
+        res.status(500).send({ message: "Error interno del servidor" });
+      }
+    });
 };
 
 module.exports.createUser = (req, res) => {
