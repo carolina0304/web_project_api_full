@@ -25,8 +25,16 @@ module.exports.createNewcard = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndDelete(req.params.cardId)
+  Card.findById(req.params.cardId)
     .orFail() //convierte el null en un error real
+    .then((card) => {
+      // Verificar si el usuario es el propietario - ERROR 403
+      if (card.owner.toString() !== req.user._id) {
+        return res.status(403).send({ message: "Acceso denegado" });
+      }
+      // Si es el propietario, eliminar la tarjeta
+      return Card.findByIdAndDelete(req.params.cardId);
+    })
     .then((card) => {
       res.send({ data: card });
     })
@@ -47,16 +55,44 @@ module.exports.deleteCard = (req, res) => {
 //- findByIdAndUpdate() - Actualizas un registro específico
 //- findByIdAndDelete() - Eliminas un registro específico
 
-module.exports.likeCard = (req, res) =>
+module.exports.likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId, // primer parámetro: ID de la tarjeta
     { $addToSet: { likes: req.user._id } }, // agrega _id al array si aún no está ahí
     { new: true }
-  );
+  )
+    .orFail() // Convierte null en error si no encuentra la tarjeta
+    .then((card) => {
+      res.send({ data: card }); // ✅ Envía la tarjeta actualizada
+    })
+    .catch((err) => {
+      if (err.name === "DocumentNotFoundError") {
+        res.status(404).send({ message: "Tarjeta no encontrada" });
+      } else if (err.name === "CastError") {
+        res.status(400).send({ message: "ID inválido" });
+      } else {
+        res.status(500).send({ message: "Error interno del servidor" });
+      }
+    });
+};
 
-module.exports.dislikeCard = (req, res) =>
+module.exports.dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // elimina _id del array
     { new: true }
-  );
+  )
+    .orFail() // Convierte null en error si no encuentra la tarjeta
+    .then((card) => {
+      res.send({ data: card }); // ✅ Envía la tarjeta actualizada
+    })
+    .catch((err) => {
+      if (err.name === "DocumentNotFoundError") {
+        res.status(404).send({ message: "Tarjeta no encontrada" });
+      } else if (err.name === "CastError") {
+        res.status(400).send({ message: "ID inválido" });
+      } else {
+        res.status(500).send({ message: "Error interno del servidor" });
+      }
+    });
+};

@@ -32,6 +32,25 @@ module.exports.getUserbyID = (req, res) => {
     });
 };
 
+module.exports.infoUser = (req, res) => {
+  User.findById(req.user._id)
+    .orFail() //convierte el null en un error real
+    .then((user) => {
+      // Solo llega aquí si SÍ encontró el usuario
+      res.send({ data: user });
+    })
+    .catch((err) => {
+      // Ahora SÍ captura el error cuando no encuentra el usuario
+      if (err.name === "DocumentNotFoundError") {
+        res.status(404).send({ message: "Usuario no encontrado" });
+      } else if (err.name === "CastError") {
+        res.status(400).send({ message: "ID inválido" });
+      } else {
+        res.status(500).send({ message: "Error interno del servidor" });
+      }
+    });
+};
+
 /*module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
@@ -103,6 +122,7 @@ module.exports.login = (req, res) => {
   const { email, password } = req.body;
   let user;
   User.findOne({ email })
+    .select("+password")
     .then((foundUser) => {
       if (!foundUser) {
         return Promise.reject(new Error("Incorrect password or email"));

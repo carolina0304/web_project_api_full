@@ -50,14 +50,6 @@ const PORT = 3000; //Define en que puerto.
 /*const cardsRouter = require("./routes/cards.js");
 app.use("/cards", cardsRouter);*/
 
-(async () => {
-  await mongoose.connect(mongo_url); //conecta a la base de datos MongoDB llamada "aroundb".
-  console.log("Conectado a la base de datos MongoDB");
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-  }); //Levanta el servidor y escucha en el puerto definido.
-})(); //Funcion autoejecutable para manejar asincronía.
-
 /*const { celebrate, Joi } = require("celebrate");
 router.post(
   "/signup",
