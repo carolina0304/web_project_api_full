@@ -1,64 +1,25 @@
 const express = require("express");
 const auth = require("./middlewares/auth");
+const errorHandler = require("./middlewares/errorHandler");
 const mongoose = require("mongoose"); //importa Mongoose.
 
 const app = express(); //crea tu aplicacion.
+
+// Configurar Express para confiar en proxies
+app.set("trust proxy", true);
+
 app.use(express.json());
 
 const mongo_url = "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
 
-/*import React, { useState, useEffect } from "react";
-
-function App() {
-  // Estado para el token
-  const [token, setToken] = useState("");
-
-  // Estado para saber si el usuario está logueado
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Estado para los datos del usuario
-  const [currentUser, setCurrentUser] = useState({});
-
-  useEffect(() => {
-    // Verificar si hay un token guardado en localStorage
-    const savedToken = localStorage.getItem("token");
-
-    if (savedToken) {
-      setToken(savedToken);
-      // Aquí verificarías si el token es válido
-      // Por ahora, asumimos que sí
-      setIsLoggedIn(true);
-    }
-  }, []); // Array vacío = se ejecuta solo al montar
-
-  // Función para manejar el login exitoso
-  const handleLogin = (token, userData) => {
-    // Guardar el token en localStorage
-    localStorage.setItem("token", token);
-
-    // Actualizar los estados
-    setToken(token);
-    setCurrentUser(userData);
-    setIsLoggedIn(true);
-  };
-
-  // Función para manejar el logout
-  const handleLogout = () => {
-    // Eliminar el token de localStorage
-    localStorage.removeItem("token");
-
-    // Limpiar los estados
-    setToken("");
-    setCurrentUser({});
-    setIsLoggedIn(false);
-  };
-}*/
-
 const { createUser, login } = require("./controllers/users");
+const { errors } = require("celebrate");
+
+const { validateSignUp, validateSignIn } = require("./middlewares/validation");
 
 //Rutas piblicas (sin autenticacion)
-app.post("/signin", login);
-app.post("/signup", createUser);
+app.post("/signin", validateSignIn, login);
+app.post("/signup", validateSignUp, createUser);
 
 app.use(auth); // A partir de aquí, todas las rutas necesitan autenticación
 
@@ -67,7 +28,12 @@ const usersRouter = require("./routes/users.js");
 app.use("/users", usersRouter);
 
 const cardsRouter = require("./routes/cards.js");
+
 app.use("/cards", cardsRouter);
+
+//Agregar el middleware de errores
+app.use(errors());
+app.use(errorHandler);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Recurso solicitado no encontrado" });
@@ -82,6 +48,76 @@ const PORT = 3000; //Define en que puerto.
     console.log(`Servidor corriendo en el puerto ${PORT}`);
   }); //Levanta el servidor y escucha en el puerto definido.
 })(); //Funcion autoejecutable para manejar asincronía.
+
+/*const { celebrate, Joi, errors } = require("celebrate");
+const validator = require("validator");
+
+//Declarar la funcion de validacion
+const validateURL = (value, helpers) => {
+  if (validator.isURL(value)) {
+    return value;
+  }
+  return helpers.error("string.uri");
+};
+
+//Declarar todos los esquemas de validacion
+// Esquema de validación para registro
+const validateSignUp = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().custom(validateURL),
+  }),
+});
+
+// Esquema de validación para login
+const validateSignIn = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+});
+
+
+
+// Validación para actualizar perfil de usuario
+const validateUpdateUser = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+  }),
+});
+
+// Validación para actualizar avatar
+const validateUpdateAvatar = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().custom(validateURL),
+  }),
+});
+
+// Validación para parámetros de usuario (ID)
+const validateUserId = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().hex().length(24),
+  }),
+});
+
+// Validación para crear tarjeta
+const validateCreateCard = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().custom(validateURL),
+  }),
+});
+
+// Validación para parámetros de tarjeta (ID)
+const validateCardId = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().hex().length(24),
+  }),
+});
 
 // MIDDLEWARE DE USUARIO TEMPORAL (solo para rutas protegidas)
 /*app.use((req, res, next) => {
