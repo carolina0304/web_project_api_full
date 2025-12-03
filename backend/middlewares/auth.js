@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, "some-secret-key");
+    payload = jwt.verify(token, "tu-clave-secreta");
   } catch (err) {
     return res.status(401).send({ message: "Se requiere autorización" });
   }

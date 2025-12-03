@@ -10,7 +10,7 @@ const router = express.Router();
 const {
   getUsers,
   getUserbyID,
-  /*createUser,*/
+  createUser,
   UpdateId,
   UpdateAvatar,
   infoUser,
@@ -20,11 +20,11 @@ const User = require("../models/user.js"); // ajusta la ruta según tu estructur
 
 router.get("/", auth, getUsers);
 
+router.patch("/me", auth, validateUpdateUser, UpdateId);
+
 router.get("/:userId", auth, validateUserId, getUserbyID);
 
-/*router.post("/", createUser);*/
-
-router.patch("/me", auth, validateUpdateUser, UpdateId);
+router.post("/signup", createUser);
 
 router.patch("/me/avatar", auth, validateUpdateAvatar, UpdateAvatar);
 

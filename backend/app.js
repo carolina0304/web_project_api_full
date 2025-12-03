@@ -1,9 +1,20 @@
 const express = require("express");
+
+const cors = require("cors");
+
 const auth = require("./middlewares/auth");
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require("./middlewares/errorHandle.js");
 const mongoose = require("mongoose"); //importa Mongoose.
 
 const app = express(); //crea tu aplicacion.
+
+// Configurar CORS
+app.use(
+  cors({
+    origin: "http://localhost:5173", // URL de tu frontend
+    credentials: true,
+  })
+);
 
 // Configurar Express para confiar en proxies
 app.set("trust proxy", true);
@@ -39,7 +50,7 @@ app.use((req, res) => {
   res.status(404).json({ message: "Recurso solicitado no encontrado" });
 }); //Manejo de rutas no encontradas.
 
-const PORT = 3000; //Define en que puerto.
+const PORT = 3001; //Define en que puerto.
 
 (async () => {
   await mongoose.connect(mongo_url); //conecta a la base de datos MongoDB llamada "aroundb".

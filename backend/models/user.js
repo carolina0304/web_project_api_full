@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 4,
+    minlength: 8,
     maxlength: 60,
     select: false, // Esta línea evita que el password se devuelva por defecto
   },
