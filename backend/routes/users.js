@@ -22,12 +22,12 @@ router.get("/", auth, getUsers);
 
 router.patch("/me", auth, validateUpdateUser, UpdateId);
 
-router.get("/:userId", auth, validateUserId, getUserbyID);
-
-router.post("/signup", createUser);
+router.get("/me", auth, infoUser);
 
 router.patch("/me/avatar", auth, validateUpdateAvatar, UpdateAvatar);
 
-router.get("/me", auth, infoUser);
+router.get("/:userId", auth, validateUserId, getUserbyID);
+
+router.post("/signup", createUser);
 
 module.exports = router;
