@@ -1,0 +1,101 @@
+.header {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.header__logo {
+  width: 173px;
+  height: 33px;
+  margin: 45px auto 0 45px;
+}
+
+.header__line {
+  width: 100%;
+  /*margin-top: 41px;*/
+}
+
+.header__link {
+  width: 111px;
+  font-family: "Inter";
+  font-size: 18px;
+  margin-top: 67px;
+  color: #fff;
+  text-align: right;
+  margin-left: 580px;
+}
+
+.header__user-info {
+  width: 141px;
+  font-family: "Inter";
+  font-size: 18px;
+  margin-top: 0;
+  color: #fff;
+  text-align: right;
+  margin-left: 600px;
+}
+
+.header__signout-button {
+  width: 114px;
+  font-family: "Inter";
+  font-size: 18px;
+  color: inherit;
+  text-align: right;
+  margin-left: 150px;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.header__email {
+  width: 111px;
+  font-family: "Inter";
+  font-size: 18px;
+  color: #fff;
+  text-align: right;
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .header__signout-button {
+    width: 75px;
+    margin: 0;
+  }
+  .header__link {
+    margin-left: 550px;
+  }
+  .header__email {
+    margin-left: -20px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .header__logo {
+    width: 126px;
+    height: 24px;
+    /*margin-top: 28px;
+    margin-left: 230px;*/
+  }
+  .header__line {
+    width: 320px;
+    margin-top: 32px;
+  }
+
+  .header__link {
+    margin-left: 50px;
+  }
+
+  .header__user-info {
+    margin: auto;
+    padding-top: 30px;
+  }
+
+  .header__signout-button {
+    margin-right: 50px;
+    padding-top: 30px;
+  }
+}

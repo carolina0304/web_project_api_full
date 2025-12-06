@@ -1,0 +1,91 @@
+.element {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 17px;
+  margin: auto;
+  max-width: 880px;
+}
+
+.element__card {
+  background-color: white;
+  border-radius: 10px;
+  max-width: 282px;
+  max-height: 361px;
+}
+
+.element__cardimage {
+  width: 282px;
+  height: 282px;
+}
+
+.element__content {
+  display: flex;
+  justify-content: space-around;
+  max-width: 246px;
+  position: relative;
+  top: -25px;
+  right: -15px;
+}
+
+.element__contentparagraph {
+  font-family: "Inter";
+  font-weight: 900;
+  font-size: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.element__contentbutton {
+  border-style: none;
+  cursor: pointer;
+  padding: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.element__contentlike {
+  width: 21px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+}
+
+.element__contentlike-active {
+  width: 21px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+  background-image: url(../images/Union.png);
+  background-repeat: no-repeat;
+}
+
+.element__delete {
+  width: 18px;
+  height: 19px;
+  position: relative;
+  top: -270px;
+  left: 250px;
+  border: none;
+  cursor: pointer;
+  background: url(../images/Trash.svg) center no-repeat;
+}
+
+.element__delete:hover {
+  opacity: 60%;
+}
+
+@media screen and (max-width: 1024px) {
+  .element {
+    margin: 0 100px 0 100px;
+  }
+}
+@media screen and (max-width: 544px) {
+  .element {
+    flex-direction: column;
+    align-items: center;
+    margin: 36px 19px 0 19px;
+  }
+}

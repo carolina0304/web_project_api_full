@@ -1,0 +1,32 @@
+.footer {
+  max-width: 880px;
+  padding-bottom: 60px;
+  margin: auto;
+}
+
+.footer__copyright {
+  width: 318px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  margin-top: 67px;
+  color: rgba(84, 84, 84, 1);
+}
+@media screen and (max-width: 1024px) {
+  .footer__copyright {
+    margin: 50px 150px 0;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .footer {
+    padding-bottom: 36px;
+  }
+  .footer__copyright {
+    width: 282px;
+    font-size: 14px;
+    margin-left: 19px;
+    margin-bottom: 36px;
+    margin-top: 50px;
+  }
+}

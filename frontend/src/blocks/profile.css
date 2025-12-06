@@ -1,0 +1,180 @@
+.profile {
+  height: 210px;
+  max-width: 880px;
+  margin: auto;
+}
+
+.profile__info {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+}
+
+.profile__infoavatar {
+  width: 120px;
+  height: 120px;
+  margin-left: 30px;
+  margin-top: 40px;
+  border-radius: 50%;
+}
+
+.profile__name {
+  width: 445px;
+  height: 77px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.profile__namenames {
+  color: white;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  margin-left: 30px;
+  margin-bottom: 16px;
+  width: 325px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile__namesubname {
+  color: white;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  margin-left: 30px;
+  margin-top: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 325px;
+}
+
+.profile__nameeditbutton {
+  width: 24px;
+  height: 24px;
+  margin-left: 18px;
+  cursor: pointer;
+}
+
+.profile__nameeditbutton:hover {
+  opacity: 60%;
+}
+
+.profile__infoaddbutton {
+  width: 150px;
+  height: 50px;
+  margin-left: 100px;
+  cursor: pointer;
+}
+
+.profile__infoaddbutton:hover {
+  opacity: 60%;
+}
+
+.profile__editavatar {
+  width: 26px;
+  height: 26px;
+  left: 370px;
+  top: 215px;
+  position: absolute;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.profile__editavatar:hover {
+  opacity: 60%;
+}
+@media screen and (max-width: 1024px) {
+  .profile {
+    max-width: 100%;
+    margin: auto;
+  }
+  .profile__info {
+    max-width: 100%;
+    margin: auto;
+  }
+
+  .profile__name {
+    width: 445px;
+  }
+
+  .profile__namenames {
+    width: 230px;
+    font-size: 30px;
+    margin: 20px 0 0;
+  }
+  .profile__namesubname {
+    margin-left: 49px;
+    width: 230px;
+    margin: 0;
+  }
+
+  .profile__nameeditbutton {
+    margin: 0;
+  }
+
+  .profile__infoaddbutton {
+    width: 130px;
+    margin-left: -80px;
+  }
+  .profile__editavatar {
+    left: 255px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .profile {
+    width: 100%;
+    height: 364px;
+  }
+  .profile__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile__infoavatar {
+    margin: 42px auto 0;
+  }
+
+  .profile__name {
+    width: 285px;
+    height: 50px;
+  }
+  .profile__namenames {
+    font-size: 22px;
+    margin-top: 32px;
+    margin-bottom: 0;
+    width: 224px;
+    text-align: center;
+  }
+
+  .profile__namesubname {
+    font-size: 14px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .profile__nameeditbutton {
+    width: 18px;
+    height: 18px;
+    margin-top: 32px;
+    margin-left: 0;
+  }
+
+  .profile__infoaddbutton {
+    width: 282px;
+    margin: 86px auto 0;
+  }
+  .profile__editavatar {
+    left: 140px;
+    top: 300px;
+  }
+}
