@@ -1,4 +1,4 @@
-import FotoAvatar from "../../images/Arlen-37.png";
+/*import FotoAvatar from "../../images/Arlen-37.png";*/
 import EditarAvatar from "../../images/Editarperfil.png";
 import EditarNombre from "../../images/EditButton.png";
 import BotonAdd from "../../images/AddButton.png";
