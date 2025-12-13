@@ -8,6 +8,10 @@ const mongoose = require("mongoose"); //importa Mongoose.
 
 const app = express(); //crea tu aplicacion.
 
+// Habilitar CORS antes de otras rutas
+/*app.use(cors());
+app.options("*", cors());*/
+
 // Configurar CORS
 app.use(
   cors({
@@ -59,102 +63,3 @@ const PORT = 3000; //Define en que puerto.
     console.log(`Servidor corriendo en el puerto ${PORT}`);
   }); //Levanta el servidor y escucha en el puerto definido.
 })(); //Funcion autoejecutable para manejar asincronía.
-
-/*const { celebrate, Joi, errors } = require("celebrate");
-const validator = require("validator");
-
-//Declarar la funcion de validacion
-const validateURL = (value, helpers) => {
-  if (validator.isURL(value)) {
-    return value;
-  }
-  return helpers.error("string.uri");
-};
-
-//Declarar todos los esquemas de validacion
-// Esquema de validación para registro
-const validateSignUp = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().custom(validateURL),
-  }),
-});
-
-// Esquema de validación para login
-const validateSignIn = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-});
-
-
-
-// Validación para actualizar perfil de usuario
-const validateUpdateUser = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-  }),
-});
-
-// Validación para actualizar avatar
-const validateUpdateAvatar = celebrate({
-  body: Joi.object().keys({
-    avatar: Joi.string().required().custom(validateURL),
-  }),
-});
-
-// Validación para parámetros de usuario (ID)
-const validateUserId = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().hex().length(24),
-  }),
-});
-
-// Validación para crear tarjeta
-const validateCreateCard = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().custom(validateURL),
-  }),
-});
-
-// Validación para parámetros de tarjeta (ID)
-const validateCardId = celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().hex().length(24),
-  }),
-});
-
-// MIDDLEWARE DE USUARIO TEMPORAL (solo para rutas protegidas)
-/*app.use((req, res, next) => {
-  req.user = {
-    _id: "68e9085c26a52d0d03a22618", // pega el _id del usuario de prueba que creamos en el paso anterior
-  };
-
-  next();
-});*/
-
-//RUTAS
-
-/*const cardsRouter = require("./routes/cards.js");
-app.use("/cards", cardsRouter);*/
-
-/*const { celebrate, Joi } = require("celebrate");
-router.post(
-  "/signup",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required().min(4).max(8),
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().custom(validateURL),
-    }),
-  }),
-  createUser
-);*/

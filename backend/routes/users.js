@@ -18,16 +18,16 @@ const {
 
 const User = require("../models/user.js"); // ajusta la ruta según tu estructura
 
-router.get("/", auth, getUsers);
+router.get("/", getUsers);
 
-router.patch("/me", auth, validateUpdateUser, UpdateId);
+router.patch("/me", validateUpdateUser, UpdateId);
 
-router.get("/me", auth, infoUser);
+router.get("/me", infoUser);
 
-router.patch("/me/avatar", auth, validateUpdateAvatar, UpdateAvatar);
+router.patch("/me/avatar", validateUpdateAvatar, UpdateAvatar);
 
-router.get("/:userId", auth, validateUserId, getUserbyID);
+router.get("/:userId", validateUserId, getUserbyID);
 
-router.post("/signup", createUser);
+/*router.post("/signup", createUser);*/
 
 module.exports = router;

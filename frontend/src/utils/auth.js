@@ -1,6 +1,7 @@
 // src/utils/auth.js
 
 // Especifica la BASE_URL para la API.
+/*export const BASE_URL = "http://wrwt.chanka.com/api";*/
 export const BASE_URL = "http://localhost:3000";
 
 // La función registrada acepta los datos necesarios como argumentos,
