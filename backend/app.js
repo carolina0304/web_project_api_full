@@ -50,7 +50,7 @@ app.use((req, res) => {
   res.status(404).json({ message: "Recurso solicitado no encontrado" });
 }); //Manejo de rutas no encontradas.
 
-const PORT = 3001; //Define en que puerto.
+const PORT = 3000; //Define en que puerto.
 
 (async () => {
   await mongoose.connect(mongo_url); //conecta a la base de datos MongoDB llamada "aroundb".

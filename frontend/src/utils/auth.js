@@ -1,7 +1,7 @@
 // src/utils/auth.js
 
 // Especifica la BASE_URL para la API.
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "http://localhost:3000";
 
 // La función registrada acepta los datos necesarios como argumentos,
 // y envía una solicitud POST al endpoint dado.
