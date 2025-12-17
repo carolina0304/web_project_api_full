@@ -255,7 +255,14 @@ function AppContent() {
                 <Main
                   cards={cards}
                   setCards={setCards}
-                  onAddPlaceSubmit={handleAppPlaceSubmit}
+                  /*onAddPlaceSubmit={handleAppPlaceSubmit}*/
+                  onAddPlaceSubmit={(newCardData) => {
+                    return api.addCard(newCardData).then((response) => {
+                      const newCard = response.data || response;
+                      setCards((prevCards) => [newCard, ...prevCards]);
+                      return newCard;
+                    });
+                  }}
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
                   onOpenPopup={handleOpenPopup}

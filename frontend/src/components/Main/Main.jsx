@@ -62,12 +62,12 @@ const Main = ({ cards, setCards, onAddPlaceSubmit }) => {
   /*const [cards, setCards, onAddPlaceSubmit] = props;*/
 
   // 👇 Aquí va la función para likes/dislikes
-  async function handleCardLike(card) {
+  /*async function handleCardLike(card) {
     console.log("LIKE: ", card);
     // Verifica una vez más si a esta tarjeta ya les has dado like
     const isLiked =
       Array.isArray(card.likes) &&
-      card.likes.some((like) => like._id === currentUser._id);
+      card.likes.some((like) => like._id === currentUser?.data?._id);
 
     // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
     await api
@@ -81,6 +81,33 @@ const Main = ({ cards, setCards, onAddPlaceSubmit }) => {
         );
       })
       .catch((err) => console.log(err));
+  }*/
+
+  async function handleCardLike(card) {
+    console.log("🔍 ANTES - Cards actuales:", cards.length);
+    console.log("🔍 ANTES - Card recibida:", card);
+
+    const actualCard = card.data || card;
+    const isLiked = actualCard.likes.some((like) => {
+      const likeId = typeof like === "object" ? like._id : like;
+      return likeId === currentUser?.data?._id;
+    });
+
+    await api
+      .changeLikeCardStatus(actualCard._id, !isLiked)
+      .then((response) => {
+        console.log("🔍 Respuesta del servidor:", response);
+
+        // 👇 AQUÍ está el cambio importante
+        const updatedCard = response.data || response;
+
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === actualCard._id ? updatedCard : currentCard
+          )
+        );
+      })
+      .catch((err) => console.log("❌ Error:", err));
   }
 
   // 👇 Aquí va la función para likes/dislikes
@@ -138,15 +165,17 @@ const Main = ({ cards, setCards, onAddPlaceSubmit }) => {
       </section>
 
       <section className="element">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardLike={handleCardLike} // <-- Aquí pasas la función
-            setSelectedCard={setSelectedCard}
-            onCardDelete={handleCardDelete}
-          />
-        ))}
+        {cards
+          .filter((card) => card && card._id && card.name && card.link) // Filtrar cards válidas
+          .map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardLike={handleCardLike} // <-- Aquí pasas la función
+              setSelectedCard={setSelectedCard}
+              onCardDelete={handleCardDelete}
+            />
+          ))}
       </section>
 
       {popup && (
