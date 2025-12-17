@@ -25,9 +25,23 @@ module.exports.createNewcard = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
+  console.log("🔍 DELETE: Función deleteCard ejecutándose");
+  console.log("🔍 DELETE: Card ID:", req.params.cardId);
+  console.log("🔍 DELETE: Usuario actual:", req.user._id);
+
   Card.findById(req.params.cardId)
     .orFail() //convierte el null en un error real
     .then((card) => {
+      console.log("🔍 DELETE: Tarjeta encontrada");
+      console.log(
+        "🔍 DELETE: Propietario de la tarjeta:",
+        card.owner.toString()
+      );
+      console.log("🔍 DELETE: Usuario actual:", req.user._id);
+      console.log(
+        "🔍 DELETE: ¿Son iguales?",
+        card.owner.toString() === req.user._id
+      );
       // Verificar si el usuario es el propietario - ERROR 403
       if (card.owner.toString() !== req.user._id) {
         return res.status(403).send({ message: "Acceso denegado" });

@@ -56,7 +56,11 @@ function AppContent() {
       // Solo cargar datos si está logueado
       api
         .getInitialCards()
-        .then((response) => setCards(response.data))
+        .then((response) => {
+          console.log("🔍 Respuesta completa de la API:", response);
+          console.log("🔍 Datos de las tarjetas:", response.data);
+          setCards(response.data);
+        })
         .catch((err) => console.error("Error al cargar tarjetas:", err));
 
       api

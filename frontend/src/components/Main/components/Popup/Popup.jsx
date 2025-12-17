@@ -1,7 +1,9 @@
 export default function Popup(props) {
   //los hijos son el contenido de la ventana emergente
   const { onClose, title, children } = props;
+
   console.log("Popup props:", props);
+
   return (
     <div className="popup">
       <div className={`popup__content ${!title ? "popup popup-image" : ""}`}>
