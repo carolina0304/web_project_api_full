@@ -15,7 +15,11 @@ app.options("*", cors());*/
 // Configurar CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // URL de tu frontend
+    origin: [
+      "http://localhost:5173", // URL de tu frontend
+      "https://wrwt.chanka.com", // Tu dominio de producción con HTTPS
+      "http://wrwt.chanka.com", // Tu dominio sin HTTPS (por si acaso)
+    ],
     credentials: true,
   })
 );
