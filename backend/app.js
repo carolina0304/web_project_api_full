@@ -59,7 +59,6 @@ const cardsRouter = require("./routes/cards.js");
 app.use("/cards", cardsRouter);
 
 //Agregar el middleware de errores
-app.use(errors());
 app.use(errorHandler);
 
 app.use((req, res) => {
