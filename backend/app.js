@@ -11,18 +11,23 @@ const app = express(); //crea tu aplicacion.
 // Habilitar CORS antes de otras rutas
 /*app.use(cors());
 app.options("*", cors());*/
+const whitelist = [
+  "http://localhost:5173",
+  "https://wrwt.chanka.com",
+  "http://wrwt.chanka.com",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
 // Configurar CORS
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173", // URL de tu frontend
-      "https://wrwt.chanka.com", // Tu dominio de producción con HTTPS
-      "http://wrwt.chanka.com", // Tu dominio sin HTTPS (por si acaso)
-    ],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 // Configurar Express para confiar en proxies
 app.set("trust proxy", true);
