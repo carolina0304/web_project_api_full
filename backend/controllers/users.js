@@ -172,7 +172,7 @@ module.exports.login = (req, res) => {
       // autenticación exitosa
       const token = jwt.sign(
         { _id: user._id }, // payload con solo el _id
-        "tu-clave-secreta", // clave secreta
+        process.env.JWT_SECRET || "tu-clave-secreta", // clave secreta desde .env
         { expiresIn: "7d" } // expira en 7 días (una semana)
       );
 

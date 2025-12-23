@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, "tu-clave-secreta");
+    payload = jwt.verify(token, process.env.JWT_SECRET || "tu-clave-secreta");
     console.log("✅ AUTH: Token verificado exitosamente");
     console.log("🔍 AUTH: Usuario ID:", payload._id);
   } catch (err) {
