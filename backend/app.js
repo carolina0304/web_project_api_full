@@ -42,18 +42,18 @@ const { errors } = require("celebrate");
 const { validateSignUp, validateSignIn } = require("./middlewares/validation");
 
 //Rutas piblicas (sin autenticacion)
-app.post("/api/signin", validateSignIn, login);
-app.post("/api/signup", validateSignUp, createUser);
+app.post("/signin", validateSignIn, login);
+app.post("/signup", validateSignUp, createUser);
 
 app.use(auth); // A partir de aquí, todas las rutas necesitan autenticación
 
 //RUTAS PROTEGIDAS
 const usersRouter = require("./routes/users.js");
-app.use("/api/users", usersRouter);
+app.use("/users", usersRouter);
 
 const cardsRouter = require("./routes/cards.js");
 
-app.use("/api/cards", cardsRouter);
+app.use("/cards", cardsRouter);
 
 //Agregar el middleware de errores
 app.use(errorHandler);
