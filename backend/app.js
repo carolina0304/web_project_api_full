@@ -35,7 +35,8 @@ app.set("trust proxy", true);
 
 app.use(express.json());
 
-const mongo_url = "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
+const mongo_url =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/aroundb"; //URL de conexion a la base de datos MongoDB.
 
 const { createUser, login } = require("./controllers/users");
 const { errors } = require("celebrate");
