@@ -16,7 +16,14 @@ const whitelist = [
 ];
 const corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    // Permitir requests sin origin (como Postman) en desarrollo
+    if (!origin) return callback(null, true);
+
+    // Permitir dominios en whitelist O cualquier subdominio de onrender.com
+    if (
+      whitelist.indexOf(origin) !== -1 ||
+      (origin && origin.includes(".onrender.com"))
+    ) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
