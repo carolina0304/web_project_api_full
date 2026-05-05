@@ -13,6 +13,7 @@ const whitelist = [
   "http://localhost:5173",
   "https://wrwt.chanka.com",
   "http://wrwt.chanka.com",
+  "https://around-frontend-app.onrender.com",
 ];
 const corsOptions = {
   origin: function (origin, callback) {

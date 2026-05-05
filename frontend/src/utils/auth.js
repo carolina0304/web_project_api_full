@@ -3,7 +3,7 @@
 // Especifica la BASE_URL para la API.
 /*export const BASE_URL = "https://api.wrwt.chanka.com";*/
 export const BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:3000";
+  import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
 
 // La función registrada acepta los datos necesarios como argumentos,
 // y envía una solicitud POST al endpoint dado.
