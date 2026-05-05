@@ -8,9 +8,7 @@ Frontend, backend
 
 # Dominio
 
-wrwt.chanka.com
-www.wrwt.chanka.com
-api.wrwt.chanka.com
+https://around-frontend-app.onrender.com/
 
 # Author
 
